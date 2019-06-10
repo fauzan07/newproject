@@ -1,0 +1,6 @@
+<h2>project catagory: </h2>
+@foreach($client->projectcategory as $cp)
+
+{{ $cp->parent_catagories}}
+
+@endforeach 

@@ -1,0 +1,43 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use App\User;
+
+class UserController extends Controller
+{
+
+    public function index()
+    {
+        $users = User::whereNull('approved_at')->get();
+         $users1 = User::whereNotNull('approved_at')->get();
+        return view('users', compact('users','users1'));
+    }
+
+    public function approve($user_id)
+    {
+        $user = User::findOrFail($user_id);
+        $user->update(['approved_at' => now()]);
+
+        return redirect()->route('admin.users.index')->withMessage('User approved successfully');
+    }
+
+
+ public function data()
+    {
+        $data = new User();
+        $users=$data->all();
+        return view('user1.allusers', compact('users'));
+    }
+
+
+ 
+    public function show($id)
+    {
+      $user=User::findOrFail($id);
+      return view("user1.show",compact('user'));
+    }
+
+
+}
